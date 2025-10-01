@@ -16,19 +16,38 @@ double BankCustomer::getBalance() const {
 
 void BankCustomer::setBalance(double amount) {
     this->balance = amount;
+    addTransaction("Set balance to $" + std::to_string(amount));
 }
 
 void BankCustomer::addBalance(double amount) {
     this->balance += amount;
+    addTransaction("Deposited $" + std::to_string(amount));
 }
 
 bool BankCustomer::withdrawBalance(double amount){
     if (amount > this->balance) {
         std::cout << "Rejected: Insufficient funds!" << std::endl;
+        addTransaction("Failed withdrawal of $" + std::to_string(amount) + " (Insufficient funds)");
         return false;
     }
     this->balance -= amount;
+    addTransaction("Withdrew $" + std::to_string(amount));
     return true;
+}
+
+void BankCustomer::addTransaction(const std::string& desc) {
+    transactionHistory.push_back(desc);
+}
+
+void BankCustomer::printTransactionHistory() const {
+    std::cout << "Transaction History for " << name << ":" << std::endl;
+    if (transactionHistory.empty()) {
+        std::cout << "No transactions yet." << std::endl;
+    } else {
+        for (const auto& t : transactionHistory) {
+            std::cout << "- " << t << std::endl;
+        }
+    }
 }
 
 void BankCustomer::printInfo() const {
