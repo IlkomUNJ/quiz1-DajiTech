@@ -13,23 +13,4 @@ public:
         this->name = name;
         this->customerCount = 0;
     }
-
-    void addAccount(const BankCustomer& customer) {
-        Accounts.push_back(customer);
-        customerCount++;
-    }
-
-    BankCustomer* getAccountById(int id) {
-        for (auto& acc : Accounts) {
-            if (acc.getId() == id) return &acc;
-        }
-        return nullptr;
-    }
-
-    void printAllAccounts() const {
-        std::cout << "Bank: " << name << std::endl;
-        for (const auto& acc : Accounts) {
-            acc.printInfo();
-        }
-    }
 };
